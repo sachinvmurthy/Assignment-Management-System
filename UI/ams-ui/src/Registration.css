@@ -1,0 +1,63 @@
+.App {
+    text-align: center;
+    background-color:green;
+    }
+    
+    .label{
+    display: block;
+    font-size: larger;
+    color: rgb(0, 0, 0);
+    padding: 5px;
+    text-align: center;
+    }
+    
+    .input{
+    font-size: larger;
+    padding: 5px;
+    margin: auto;
+    display: block;
+
+    }
+    .radioButtons{
+        margin: 10px;
+        text-align: center;
+    }
+    .btn{
+        background-color: #4CAF50; 
+        border: 10px;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+    }
+    
+    .submitButton{
+        text-align: center;
+    }
+    .messages{
+    display: flex;
+    justify-content: center;
+    }
+    
+    .error{
+    display: block;
+    color: rgb(182, 2, 2);
+    width: fit-content;
+    height: 50px;
+    padding: 5px;
+    }
+    
+    .success{
+    display: block;
+    color: rgb(109, 132, 231);
+    width: fit-content;
+    height: 50px;
+    padding: 5px;
+    }
+
+    .heading{
+        text-align: center;
+    }
+    
