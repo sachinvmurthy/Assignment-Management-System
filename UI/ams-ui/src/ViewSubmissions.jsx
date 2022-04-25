@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import Base64Downloader from 'react-base64-downloader';
+import "./ViewSubmissions.css"
 
 function ViewSubmissions() {
     const [submissions, setSubmissions] = useState([])
     const [courses, setCourses] = useState([])
-
+    const [base64, setBase64] = useState()
 
     useEffect(() => {
         fetch(`http://localhost:3000/api/courses/getCourses/${localStorage.getItem("user_id")}`, {
@@ -31,7 +33,17 @@ function ViewSubmissions() {
             }).catch(error => console.log(error))
     }
 
-
+    const handleDownload = (assignment_id) => {
+        fetch(`http://localhost:3000/api/courses/get_assignments_data/${assignment_id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then(response => response.json())
+            .then(resData => {
+                setBase64(resData.fileData)
+            }).catch(error => console.log(error))
+    }
     return (
 
         <>
@@ -41,13 +53,13 @@ function ViewSubmissions() {
                 })}
             </select>
             <div className="ViewSubmissions">
-                <table>
+                <table className="AssignmentTable">
                     <tr>
-                        <th>Assignment Id</th>
-                        <th>Assignment Name</th>
-                        <th>Student Name</th>
-                        <th>Status</th>
-                        <th>Files</th>
+                        <th>Assignment ID </th>
+                        <th>Assignment Name </th>
+                        <th>Student Name </th>
+                        <th>Status </th>
+                        <th>Files </th>
                     </tr>
                     {submissions.map((val, key) => {
                         return (
@@ -56,7 +68,11 @@ function ViewSubmissions() {
                                 <td>{val.assignment_name}</td>
                                 <td>{val.student_name}</td>
                                 <td>{val.status}</td>
-                                <td>{val.files}</td>
+                                <td>
+                                    <Base64Downloader base64={base64} downloadName="Assignment">
+                                        Download Assignment
+                                    </Base64Downloader>
+                                </td>
                             </tr>
                         )
                     })}
