@@ -4,7 +4,7 @@ import './CourseBoard.css'
 
 function CourseBoard() {
 
-  const [tickets, setTickets] = useState([])
+  const [tickets, setTickets] = useState()
   const fileRef = useRef();
   let eventBus = undefined
 
@@ -25,7 +25,7 @@ function CourseBoard() {
   }
 
   useEffect(() => {
-    fetch(`http://localhost:3001/api/assignment/get_assignment_by_course/${localStorage.getItem("user_id")}`, {
+    fetch(`http://localhost:3001/api/assignment/get_assignments_by_student/${localStorage.getItem("userId")}`, {
       method: 'GET',
       //   mode: 'cors',
       headers: {
@@ -33,7 +33,9 @@ function CourseBoard() {
       },
     }).then(response => response.json())
       .then(resData => {
-        setTickets(resData.tickets)
+        let temp = {};
+        temp.lanes = resData.tickets;
+        setTickets(temp)
       }).catch(error => console.log(error))
   }, [])
 
@@ -78,64 +80,85 @@ function CourseBoard() {
 
 
 
-  const dataChanged = (newData) => {
-    fetch('http://localhost:3001/api/sendNewData', {
-      method: 'POST',
+  // const dataChanged = (newData) => {
+  //   fetch('http://localhost:3001/api/sendNewData', {
+  //     method: 'POST',
+  //     //   mode: 'cors',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({ "tickets": newData })
+  //   }).then(response => response.json())
+  //     .then(resData => {
+  //       setTickets(newData)
+  //     }).catch(error => console.log(error))
+  // }
+
+  const changeStatus = (cardId, sourceLaneId, targetLaneId, position, cardDetails) => {
+    debugger
+    console.log(cardDetails)
+    fetch(`http://localhost:3001/api/submissions/update/status/${cardDetails.id}`, {
+      method: 'PUT',
       //   mode: 'cors',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ "tickets": newData })
+      body: JSON.stringify({ "status": targetLaneId })
     }).then(response => response.json())
       .then(resData => {
-        setTickets(newData)
+        // setTickets(r)
+        console.log(resData)
       }).catch(error => console.log(error))
   }
 
 
 
-  const handleFileUpload = (e) => {
-    const [file] = e.target.files;
-    let base64OfFile = getBase64(file);
-
-    console.log(base64OfFile);
-    fetch('http://localhost:3001/api/sendFileData', {
-      method: 'POST',
+  const handleFileUpload = id => e => {
+    // console.log(id)
+    // const [file] = e.target.files;
+    // let base64OfFile = getBase64(file);
+    const formData = new FormData();
+    formData.append('file', e.target.files[0]);
+    // console.log(base64OfFile);
+    fetch(`http://localhost:3001/api/submissions/update/submit_file/${id}`, {
+      method: 'PUT',
       //   mode: 'cors',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'multipart/form-data'
       },
-      body: JSON.stringify({ "file": base64OfFile })
+      body: formData
     }).then(response => response.json())
       .then(resData => {
         console.log("File sent!")
-        eventBus.publish({type: 'MOVE_CARD', fromLaneId: 'lane1', toLaneId: 'lane4', cardId: 'l1c2', index: 0})
+        // eventBus.publish({ type: 'MOVE_CARD', fromLaneId: 'lane1', toLaneId: 'lane4', cardId: 'l1c2', index: 0 })
       }).catch(error => console.log(error))
   };
 
 
   const CustomCard = props => {
+    console.log(props)
     return (
       <>
-      <div className="card">
-        <b className="propTitle">{props.title}</b>
-        <b className="propLabel">{props.label}</b>
-        <br />
-        <p>{props.description}</p>
-        <div>
-          <button onClick={() => fileRef.current.click()}>
-            Upload File(s)
-          </button>
-          <input
-            ref={fileRef}
-            onChange={handleFileUpload}
-            multiple={false}
-            type="file"
-            hidden
-          />
-        </div>
+        <div className="card">
+          <b className="propTitle">{props.title}</b>
+          <b className="propLabel">{props.label}</b>
+          <br />
+          <p>{props.description}</p>
+          <div>
+            <button onClick={() => fileRef.current.click()}>
+              Upload File(s)
+            </button>
+            <input
+              ref={fileRef}
+              onChange={handleFileUpload(props.id)}
+              multiple={false}
+              type="file"
+              name="file"
+              hidden
+            />
+          </div>
 
-      </div>
+        </div>
       </>
     );
   };
@@ -144,21 +167,24 @@ function CourseBoard() {
     Card: CustomCard
   };
 
-
+  console.log(tickets)
   return (
     <>
-    <h2>Hello! Welcome to your assignment board</h2>
-    <Board
-      data={data}
-      onDataChange={dataChanged}
-      components={components}
-      collapsibleLanes
-      laneDraggable
-      style={{ backgroundColor: '#f1eeee' }}
-      eventBusHandle={setEventBus}
-    >
+      <h2>Hello! Welcome to your assignment board</h2>
+      {!!tickets && tickets.hasOwnProperty("lanes") &&
+        <Board
+          data={tickets}
+          handleDragEnd={changeStatus}
+          components={components}
+          collapsibleLanes
+          laneDraggable
+          style={{ backgroundColor: '#f1eeee' }}
+          eventBusHandle={setEventBus}
+          // handleDragEnd={changeStatus}
+        >
 
-    </Board>
+        </Board>
+      }
     </>
   )
 }

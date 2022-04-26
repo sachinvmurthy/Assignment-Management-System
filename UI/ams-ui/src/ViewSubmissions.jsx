@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Base64Downloader from 'react-base64-downloader';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import "./ViewSubmissions.css"
 
 function ViewSubmissions() {
@@ -44,13 +47,27 @@ function ViewSubmissions() {
                 setBase64(resData.fileData)
             }).catch(error => console.log(error))
     }
+    console.log(courses);
     return (
 
         <>
-            <select onChange={handleCourseChange}>
+            {/* <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={age}
+                label="Age"
+                onChange={handleCourseChange}
+            >
                 {courses.map((course) => {
-                    <option value={course.course_id}>{course.name}</option>
-                })}
+                <MenuItem value={course.course_id}>{course.name}</MenuItem>
+            })}
+            </Select> */}
+            <select onChange={handleCourseChange}>
+                {/* {courses.map((course) => { */}
+                    <option value={2}>OS</option>
+                    <option value={1}>DBMS</option>
+
+                {/* })} */}
             </select>
             <div className="ViewSubmissions">
                 <table className="AssignmentTable">
@@ -66,7 +83,7 @@ function ViewSubmissions() {
                             <tr key={key}>
                                 <td>{val.assignment_id}</td>
                                 <td>{val.assignment_name}</td>
-                                <td>{val.student_name}</td>
+                                <td>{val.fname + " " + val.lname}</td>
                                 <td>{val.status}</td>
                                 <td>
                                     <Base64Downloader base64={base64} downloadName="Assignment">
