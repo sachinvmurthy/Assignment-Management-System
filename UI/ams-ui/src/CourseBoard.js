@@ -25,7 +25,7 @@ function CourseBoard() {
   }
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/assignment/get_assignment_by_course/${localStorage.getItem("user_id")}`, {
+    fetch(`http://localhost:3001/api/assignment/get_assignment_by_course/${localStorage.getItem("user_id")}`, {
       method: 'GET',
       //   mode: 'cors',
       headers: {
@@ -79,7 +79,7 @@ function CourseBoard() {
 
 
   const dataChanged = (newData) => {
-    fetch('http://localhost:3000/api/sendNewData', {
+    fetch('http://localhost:3001/api/sendNewData', {
       method: 'POST',
       //   mode: 'cors',
       headers: {
@@ -99,7 +99,7 @@ function CourseBoard() {
     let base64OfFile = getBase64(file);
 
     console.log(base64OfFile);
-    fetch('http://localhost:3000/api/sendFileData', {
+    fetch('http://localhost:3001/api/sendFileData', {
       method: 'POST',
       //   mode: 'cors',
       headers: {

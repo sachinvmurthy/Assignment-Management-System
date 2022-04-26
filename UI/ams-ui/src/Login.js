@@ -12,8 +12,7 @@ export default function Login({ setToken }) {
 
 
   const handleSubmit = async e => {
-    setSuccess(true);
-    fetch('http://localhost:3000/api/login', {
+    fetch('http://localhost:3001/api/login', {
 				method: 'POST',
 				//   mode: 'cors',
 				headers: {
@@ -22,8 +21,9 @@ export default function Login({ setToken }) {
 				body: JSON.stringify({"password": password, "email_id": username})
 			}).then(response => response.json())
 				.then(resData => {
-					localStorage.setItem("userId", resData.user.user_id)
-					localStorage.setItem("isStudent", resData.user.student)
+					localStorage.setItem("userId", resData.user_id)
+					localStorage.setItem("isStudent", resData.student)
+          setSuccess(true);
 				}).catch(error => console.log(error))
 
   }
@@ -51,8 +51,8 @@ export default function Login({ setToken }) {
         </div>
 
         {
-				success && localStorage.getItem("isStudent") ?        <Navigate to='/board' />
-				:         <Navigate to='/assignmentUpload' />
+				success && localStorage.getItem("isStudent") == true ? <Navigate to='/board' />
+				:      success && !localStorage.getItem("isStudent") == true ? <Navigate to='/assignmentUpload' /> : <Navigate to='/login' />
 
 			}
     </>

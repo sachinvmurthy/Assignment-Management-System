@@ -8,7 +8,7 @@ function ViewSubmissions() {
     const [base64, setBase64] = useState()
 
     useEffect(() => {
-        fetch(`http://localhost:3000/api/courses/getCourses/${localStorage.getItem("user_id")}`, {
+        fetch(`http://localhost:3001/api/courses/get_courses/${localStorage.getItem("userId")}`, {
             method: 'GET',
             //   mode: 'cors',
             headers: {
@@ -21,7 +21,7 @@ function ViewSubmissions() {
     }, [])
 
     const handleCourseChange = e => {
-        fetch(`http://localhost:3000/api/courses/get_assignments/${e.target.value}`, {
+        fetch(`http://localhost:3001/api/courses/get_assignments/${e.target.value}`, {
             method: 'GET',
             //   mode: 'cors',
             headers: {
@@ -34,7 +34,7 @@ function ViewSubmissions() {
     }
 
     const handleDownload = (assignment_id) => {
-        fetch(`http://localhost:3000/api/courses/get_assignments_data/${assignment_id}`, {
+        fetch(`http://localhost:3001/api/courses/get_assignments_data/${assignment_id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

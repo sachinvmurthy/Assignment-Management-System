@@ -47,7 +47,7 @@ export default function Form() {
 		} else {
 			setSubmitted(true);
 
-			fetch('http://localhost:3000/api/registration', {
+			fetch('http://localhost:3001/api/registration', {
 				method: 'POST',
 				//   mode: 'cors',
 				headers: {
@@ -123,8 +123,8 @@ export default function Form() {
 					value={password} type="password" />
 
 				<div className="radioButtons">
-					<input type="radio" className="radioBtn" name="isStudent" value="student" onChange={e => setIsStudent(e.target.value)} /> Student
-					<input type="radio" className="radioBtn" name="isStudent" value="admin" onChange={e => setIsStudent(e.target.value)} /> Course Instructor
+					<input type="radio" className="radioBtn" name="isStudent" value="student" onChange={e => setIsStudent(true)} /> Student
+					<input type="radio" className="radioBtn" name="isStudent" value="admin" onChange={e => setIsStudent(false)} /> Course Instructor
 
 				</div>
 
@@ -137,7 +137,7 @@ export default function Form() {
 			</form>
 			{
 				submitted && isStudent ?        <Navigate to='/board' />
-				:         <Navigate to='/assignmentUpload' />
+				:         submitted && !isStudent ? <Navigate to='/assignmentUpload' /> : <Navigate to='/registration' />
 
 			}
 		</div>

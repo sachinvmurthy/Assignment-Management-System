@@ -11,7 +11,7 @@ function FileUploadPage() {
     const [submitted, setSubmitted] = useState(false);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/api/courses/getCourses/${localStorage.getItem("user_id")}`, {
+        fetch(`http://localhost:3001/api/courses/get_courses/${localStorage.getItem("userId")}`, {
             method: 'GET',
             //   mode: 'cors',
             headers: {
@@ -47,20 +47,22 @@ function FileUploadPage() {
         const formData = new FormData();
 
 
-        fetch('http://localhost:3000/api/assignment/create', {
+        fetch('http://localhost:3001/api/assignment/create', {
             method: 'POST',
             //   mode: 'cors',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({"course_id": courseId, "assignment_name": assignmentName, "assignment_description": assignmentDescription})
+            body: JSON.stringify({"course_id": 1, "assignment_name": assignmentName, "assignment_description": assignmentDescription})
         }).then(response => response.json())
             .then(resData => {
-                localStorage.setItem("userId", resData.user.user_id)
-                localStorage.setItem("isStudent", resData.user.student)
+                // localStorage.setItem("userId", resData.user.user_id)
+                // localStorage.setItem("isStudent", resData.user.student)
+                console.log("Assignment created successfully")
             }).catch(error => console.log(error))
 
     };
+    console.log(courses);
 
     return (
 
@@ -74,10 +76,16 @@ function FileUploadPage() {
             <label className="display-block">Course Id: </label>
             {/* <input className="display-block" onChange={}
                 value={course_id} type="text" /> */}
-            <select onChange={handleCourseId}>
-                {courses.map((course) => {
-                    <option value={course.name}>{course.name}</option> 
+            <select onChange={handleCourseId} style={{ width: "100px"}}>
+                {!!courses && courses.length > 0 && 
+                courses.map(course => {
+                    <option value={course.course_id}>{course.course_name}</option> 
+                    // <div>hello</div>
                 })}
+            </select>
+            <select>
+                    <option value="1">DBMS</option> 
+                    {/* <option value="hi">hi</option>  */}
             </select>
 
             {/* <label className="display-block">Deadline: </label>
