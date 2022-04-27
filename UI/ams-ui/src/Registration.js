@@ -89,10 +89,9 @@ export default function Form() {
 	};
 
 	return (
-		<div className="form">
-			<div className="heading">
-				<h1>User Registration</h1>
-			</div>
+		<div className="registration-card">
+		<div className="form" style={{ paddingBottom:"6px"}}>
+				<h2 style={{ paddingTop: "10px"}}>User Registration</h2>
 
 			{/* Calling to the methods */}
 			<div className="messages">
@@ -140,6 +139,7 @@ export default function Form() {
 				:         submitted && !isStudent ? <Navigate to='/assignmentUpload' /> : <Navigate to='/registration' />
 
 			}
+		</div>
 		</div>
 	);
 }

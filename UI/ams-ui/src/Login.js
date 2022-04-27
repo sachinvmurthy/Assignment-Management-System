@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './Login.css';
 import { Navigate } from 'react-router';
+import Card from '@mui/material/Card';
 
 
 
@@ -30,24 +31,21 @@ export default function Login({ setToken }) {
 
   return (
     <>
-
-        <div className="login-wrapper">
-          <h1>Please Log In</h1>
+        <div className="login-card">
+        <div className="container">
+          <h2 style={{ margin: "7px"}}>Login</h2>
           <form onSubmit={handleSubmit}>
             <div className="labels">
-              <label>
                 <p>Username</p>
-                <input className="input" type="text" onChange={e => setUserName(e.target.value)} />
-              </label>
-              <label>
+                <input placeholder="Username" className="input" type="text" onChange={e => setUserName(e.target.value)} />
                 <p>Password</p>
-                <input className="input" type="password" onChange={e => setPassword(e.target.value)} />
-              </label>
+                <input placeholder="Password" className="input" type="password" onChange={e => setPassword(e.target.value)} />
             </div>
             <div className="submitButton">
               <button className="btn" type="submit">Submit</button>
             </div>
           </form>
+        </div>
         </div>
 
         {

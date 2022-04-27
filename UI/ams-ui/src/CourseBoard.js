@@ -169,8 +169,8 @@ function CourseBoard() {
 
   console.log(tickets)
   return (
-    <>
-      <h2>Hello! Welcome to your assignment board</h2>
+    <div style={{ height: "80px"}}>
+      <h2 style={{ marginLeft: "31%"}}>Hello! Welcome to your assignment board</h2>
       {!!tickets && tickets.hasOwnProperty("lanes") &&
         <Board
           data={tickets}
@@ -178,14 +178,16 @@ function CourseBoard() {
           components={components}
           collapsibleLanes
           laneDraggable
-          style={{ backgroundColor: '#f1eeee' }}
+          style={{ marginLeft: '5.5%', marginRight: '5.5%', height: '650px' }}
+          className="board-card"
           eventBusHandle={setEventBus}
+          cardStyle={{ backgroundColor: '#f1e11e' }}
           // handleDragEnd={changeStatus}
         >
 
         </Board>
       }
-    </>
+    </div>
   )
 }
 export default CourseBoard

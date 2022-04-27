@@ -66,38 +66,38 @@ function FileUploadPage() {
 
     return (
 
-        <div className="Form">
+        <div className="assignment-card">
+            <h2>Upload a new assignment</h2>
 
-
-            <label className="display-block">Assignment Name: </label>
-            <input className="display-block" onChange={handleAssignmentName}
+            <label className="display-block labels">Assignment Name: </label>
+            <input className="display-block input" style={{ width: "310px"}} onChange={handleAssignmentName}
                 value={assignmentName} type="text" />
 
-            <label className="display-block">Course Id: </label>
+            <label className="display-block labels">Course Id: </label>
             {/* <input className="display-block" onChange={}
                 value={course_id} type="text" /> */}
-            <select onChange={handleCourseId} style={{ width: "100px"}}>
+            {/* <select onChange={handleCourseId} style={{ width: "100px"}}>
                 {!!courses && courses.length > 0 && 
                 courses.map(course => {
                     <option value={course.course_id}>{course.course_name}</option> 
                     // <div>hello</div>
                 })}
-            </select>
-            <select>
+            </select> */}
+            <select className="input" style={{ width: "323px"}}>
                     <option value="1">DBMS</option> 
-                    {/* <option value="hi">hi</option>  */}
+                    <option value="2">OS</option> 
             </select>
 
             {/* <label className="display-block">Deadline: </label>
             <input className="display-block" onChange={handleName}
                 value={userId} type="date" /> */}
 
-            <div className="display-block" className="assignmentDescription">
-                <label>
+            <div className="display-block" style={{ marginTop: "1%"}} className="assignmentDescription">
+                <label className="labels">
                     Assignment Description:
                 </label>
                 <div>
-                <textarea onChange={handleAssignmentDescription} value={assignmentDescription}/>
+                <textarea style={{ width: "323px", height: "200px"}} onChange={handleAssignmentDescription} value={assignmentDescription}/>
                 </div>
                 
             </div>
@@ -117,8 +117,9 @@ function FileUploadPage() {
                     <p>Select a file to show details</p>
                 )}
             </div> */}
-            <div>
-                <button onClick={handleSubmission}>Submit</button>
+            <div style={{ marginTop: "5px" }
+        }>
+                <button className="btn" onClick={handleSubmission}>Submit</button>
             </div>
         </div>
     )

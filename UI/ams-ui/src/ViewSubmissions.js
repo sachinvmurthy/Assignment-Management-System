@@ -49,8 +49,15 @@ function ViewSubmissions() {
     }
     console.log(courses);
     return (
-
         <>
+        <select className="submissions-input" onChange={handleCourseChange}>
+                {/* {courses.map((course) => { */}
+                    <option value={2}>OS</option>
+                    <option value={1}>DBMS</option>
+
+                {/* })} */}
+            </select>
+        <div className="submissions-card">
             {/* <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -62,13 +69,7 @@ function ViewSubmissions() {
                 <MenuItem value={course.course_id}>{course.name}</MenuItem>
             })}
             </Select> */}
-            <select onChange={handleCourseChange}>
-                {/* {courses.map((course) => { */}
-                    <option value={2}>OS</option>
-                    <option value={1}>DBMS</option>
-
-                {/* })} */}
-            </select>
+            
             <div className="ViewSubmissions">
                 <table className="AssignmentTable">
                     <tr>
@@ -95,6 +96,7 @@ function ViewSubmissions() {
                     })}
                 </table>
             </div>
+        </div>
         </>
     )
 }
